@@ -1,7 +1,7 @@
 {
   "name": "osu-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for The Ohio State University (bus, classes, dining, parking)",
+  "description": "MCP server for The Ohio State University (bus, buildings, classes, dining, parking, etc.)",
   "main": "build/index.js",
   "type": "module",
   "scripts": {
@@ -13,11 +13,7 @@
     "mcp",
     "ohio-state",
     "university",
-    "api",
-    "bus",
-    "classes",
-    "dining",
-    "parking"
+    "api"
   ],
   "author": "",
   "license": "MIT",
