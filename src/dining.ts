@@ -1,4 +1,5 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
+import { addLocalTimeToResponse, getCurrentEasternTime } from "./utils.js";
 
 const BASE_URL = "https://content.osu.edu/v2/api/v1/dining";
 
@@ -43,20 +44,24 @@ export async function handleDiningTool(name: string, args: any): Promise<any> {
       case "get_dining_locations":
         const locationsResponse = await fetch(`${BASE_URL}/locations`);
         const locationsData = await locationsResponse.json();
+        const processedLocationsData = addLocalTimeToResponse(locationsData);
+        
         return {
           content: [{
             type: "text",
-            text: `OSU Dining Locations:\n${JSON.stringify(locationsData, null, 2)}`
+            text: `OSU Dining Locations (Retrieved at ${getCurrentEasternTime()} Eastern Time):\n${JSON.stringify(processedLocationsData, null, 2)}`
           }]
         };
 
       case "get_dining_locations_with_menus":
         const locationsMenusResponse = await fetch(`${BASE_URL}/locations/menus`);
         const locationsMenusData = await locationsMenusResponse.json();
+        const processedLocationsMenusData = addLocalTimeToResponse(locationsMenusData);
+        
         return {
           content: [{
             type: "text",
-            text: `OSU Dining Locations with Menu Information:\n${JSON.stringify(locationsMenusData, null, 2)}`
+            text: `OSU Dining Locations with Menu Information (Retrieved at ${getCurrentEasternTime()} Eastern Time):\n${JSON.stringify(processedLocationsMenusData, null, 2)}`
           }]
         };
 
@@ -68,10 +73,12 @@ export async function handleDiningTool(name: string, args: any): Promise<any> {
 
         const menuResponse = await fetch(`${BASE_URL}/full/menu/section/${section_id}`);
         const menuData = await menuResponse.json();
+        const processedMenuData = addLocalTimeToResponse(menuData);
+        
         return {
           content: [{
             type: "text",
-            text: `Menu for Section ${section_id}:\n${JSON.stringify(menuData, null, 2)}`
+            text: `Menu for Section ${section_id} (Retrieved at ${getCurrentEasternTime()} Eastern Time):\n${JSON.stringify(processedMenuData, null, 2)}`
           }]
         };
 

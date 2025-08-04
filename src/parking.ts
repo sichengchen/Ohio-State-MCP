@@ -1,4 +1,5 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
+import { addLocalTimeToResponse, getCurrentEasternTime } from "./utils.js";
 
 const BASE_URL = "https://content.osu.edu/v2/parking/garages";
 
@@ -20,10 +21,12 @@ export async function handleParkingTool(name: string, args: any): Promise<any> {
       case "get_parking_availability":
         const response = await fetch(`${BASE_URL}/availability`);
         const data = await response.json();
+        const processedData = addLocalTimeToResponse(data);
+        
         return {
           content: [{
             type: "text",
-            text: `OSU Parking Garage Availability:\n${JSON.stringify(data, null, 2)}`
+            text: `OSU Parking Garage Availability (Retrieved at ${getCurrentEasternTime()} Eastern Time):\n${JSON.stringify(processedData, null, 2)}`
           }]
         };
 

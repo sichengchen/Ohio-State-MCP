@@ -1,4 +1,5 @@
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
+import { addLocalTimeToResponse, getCurrentEasternTime } from "./utils.js";
 
 const BASE_URL = "https://content.osu.edu/v2/bus";
 
@@ -62,10 +63,12 @@ export async function handleBusTool(name: string, args: any): Promise<any> {
       case "get_bus_routes":
         const routesResponse = await fetch(`${BASE_URL}/routes/`);
         const routesData = await routesResponse.json();
+        const processedRoutesData = addLocalTimeToResponse(routesData);
+        
         return {
           content: [{
             type: "text",
-            text: `OSU Bus Routes:\n${JSON.stringify(routesData, null, 2)}`
+            text: `OSU Bus Routes (Retrieved at ${getCurrentEasternTime()} Eastern Time):\n${JSON.stringify(processedRoutesData, null, 2)}`
           }]
         };
 
@@ -77,10 +80,12 @@ export async function handleBusTool(name: string, args: any): Promise<any> {
         
         const stopsResponse = await fetch(`${BASE_URL}/routes/${route_code}`);
         const stopsData = await stopsResponse.json();
+        const processedStopsData = addLocalTimeToResponse(stopsData);
+        
         return {
           content: [{
             type: "text", 
-            text: `Bus stops for ${BUS_ROUTES[route_code as keyof typeof BUS_ROUTES]} (${route_code}):\n${JSON.stringify(stopsData, null, 2)}`
+            text: `Bus stops for ${BUS_ROUTES[route_code as keyof typeof BUS_ROUTES]} (${route_code}) - Retrieved at ${getCurrentEasternTime()} Eastern Time:\n${JSON.stringify(processedStopsData, null, 2)}`
           }]
         };
 
@@ -92,10 +97,12 @@ export async function handleBusTool(name: string, args: any): Promise<any> {
         
         const vehiclesResponse = await fetch(`${BASE_URL}/routes/${vehicleRoute}/vehicles`);
         const vehiclesData = await vehiclesResponse.json();
+        const processedVehiclesData = addLocalTimeToResponse(vehiclesData);
+        
         return {
           content: [{
             type: "text",
-            text: `Current vehicles on ${BUS_ROUTES[vehicleRoute as keyof typeof BUS_ROUTES]} (${vehicleRoute}):\n${JSON.stringify(vehiclesData, null, 2)}`
+            text: `Current vehicles on ${BUS_ROUTES[vehicleRoute as keyof typeof BUS_ROUTES]} (${vehicleRoute}) - Retrieved at ${getCurrentEasternTime()} Eastern Time:\n${JSON.stringify(processedVehiclesData, null, 2)}`
           }]
         };
 
