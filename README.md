@@ -9,7 +9,7 @@ This server provides **50+ tools** across **14 different service categories** fo
 ### Athletics
 - **get_athletics_all**: Get information about all OSU athletics programs and schedules
 - **search_sports**: Search for specific sports or teams
-- **get_sport_by_gender**: Find sports programs by gender (men, women, mixed)
+- **get_sport_by_gender**: Find sports programs by gender
 - **get_upcoming_games**: Get upcoming games and events across all sports
 
 ### Buildings
@@ -110,7 +110,7 @@ Add this server to your Claude Desktop configuration file:
   "mcpServers": {
     "osu": {
       "command": "node",
-      "args": ["/path/to/Ohio-State-MCP/build/index.js"]
+      "args": ["/path/to/ohio-state-mcp-server/build/index.js"]
     }
   }
 }
@@ -134,7 +134,7 @@ npm run dev
 
 ## API Information
 
-This server uses The Ohio State University's content APIs:
+This server uses The Ohio State University's content APIs.
 
 ## License
 
